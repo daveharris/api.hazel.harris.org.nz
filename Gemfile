@@ -7,6 +7,8 @@ gem 'activerecord-import'
 
 gem 'puma', '~> 3.7'
 
+gem 'smarter_csv'
+
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.5'
 

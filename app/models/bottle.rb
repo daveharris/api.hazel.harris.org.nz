@@ -1,0 +1,3 @@
+class Bottle < Feeding
+
+end
