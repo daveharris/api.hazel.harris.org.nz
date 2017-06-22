@@ -3,10 +3,6 @@ class Feeding < ApplicationRecord
   validates :at, :type, presence: true
   validates :at, uniqueness: { scope: :type }
 
-  def latest_date
-
-  end
-
   def self.from_csv(filepath)
     imported_count = Feeding.count
     latest_imported_feeding_date = Feeding.maximum(:at) || Time.current

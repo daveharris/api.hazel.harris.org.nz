@@ -1,3 +1,7 @@
 Rails.application.routes.draw do
-  resources :import, only: [:index, :create]
+  scope '/api' do
+    resources :import, only: [:index, :create]
+
+    resources :bottles, only: [:index]
+  end
 end

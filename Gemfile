@@ -4,6 +4,7 @@ gem 'rails', '~> 5.1.1'
 
 gem 'pg', '~> 0.18'
 gem 'activerecord-import'
+gem 'groupdate'
 
 gem 'puma', '~> 3.7'
 
