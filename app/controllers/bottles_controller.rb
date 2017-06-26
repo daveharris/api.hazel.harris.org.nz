@@ -2,11 +2,11 @@ class BottlesController < ApplicationController
   include ActionView::Helpers::NumberHelper
 
   def index
-    stats = Bottle.pluck('count(amount), avg(amount), min(amount), max(amount), sum(amount)').flatten
+    stats = Bottle.pluck('count(id), avg(amount), min(amount), max(amount), sum(amount)').flatten
 
     render json: {
       count:      stats[0],
-      avg_amount: stats[1].round(0).to_i,
+      avg_amount: stats[1].try(:round, 0).to_i,
       min_amount: stats[2],
       max_amount: stats[3],
       sum_amount: stats[4],

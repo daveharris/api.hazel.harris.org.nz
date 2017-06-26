@@ -26,9 +26,11 @@ class Feeding < ApplicationRecord
         # {:date=>"15/06/17", :time=>"6:22:40 PM", :amount=>90, :formula=>1}
         feeding = Bottle.new
         feeding.amount = line[:amount] # amount -> Integer
+        feeding.duration = line[:bottle] # duration in seconds -> Integer
       end
 
       feeding.at = datetime
+      feeding.notes = line[:notes]
 
       feedings << feeding if feeding.valid?
     end
