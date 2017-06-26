@@ -18,10 +18,15 @@ gem 'smarter_csv'
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 # gem 'rack-cors'
 
+group :development do
+  gem 'listen', '>= 3.0.5', '< 3.2'
+end
+
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end
 
-group :development do
-  gem 'listen', '>= 3.0.5', '< 3.2'
+group :test do
+  gem 'rspec-rails'
+  gem 'database_cleaner'
 end
