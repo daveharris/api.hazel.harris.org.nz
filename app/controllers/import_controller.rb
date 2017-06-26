@@ -1,15 +1,26 @@
 class ImportController < ApplicationController
 
   def create
-    file = params[:file]
-    model = file.original_filename
+    progress = {}
+
+    params.fetch(:attachments, {}).each do |attachment|
+      model = attachment[:file_name]
                 .split('.').first
                 .gsub(' Tracker', '')
                 .singularize
 
-    created_models = model.constantize.send(:from_csv, file.tempfile.path)
+      if model_object = model.safe_constantize
+        Rails.logger.debug "Found #{model} attachment. Importing ..."
 
-    render json: { model.pluralize.downcase => created_models }
+        decoded = Base64.decode64(attachment[:content]).encode(universal_newline: true)
+        status = model_object.public_send(:from_csv, StringIO.new(decoded))
+
+        Rails.logger.info "Imported #{status.ids.size} #{model.pluralize} via #{status.num_inserts} SQL inserts"
+        progress[model.pluralize.downcase] = status
+      end
+    end
+
+    render json: progress
   end
 
 end

@@ -3,20 +3,19 @@ class Feeding < ApplicationRecord
   validates :at, :type, presence: true
   validates :at, uniqueness: { scope: :type }
 
-  def self.from_csv(filepath)
-    imported_count = Feeding.count
-    latest_imported_feeding_date = Feeding.maximum(:at) || Time.current
+  # Insert rows from CSV +input+ into the database
+  #
+  # +input+: an IO object containing a string
+  def self.from_csv(input)
+    latest_imported_feeding_date = Feeding.maximum(:at)
     feedings = []
 
-    # Standardise line endings
-    File.write(filepath, File.read(filepath).encode(universal_newline: true))
-
-    # Use ' as quote to prevent parsing ...,"Cheese" Toast,...
-    SmarterCSV.process(filepath, quote_char: "'").each do |line|
+    # Use force_simple_split prevent parsing ...,"Cheese" Toast,...
+    SmarterCSV.process(input, force_simple_split: true).each do |line|
       datetime = Time.zone.strptime("#{line[:date]} #{line[:time]}", '%d/%m/%y %l:%M:%S %p')
 
       # Reduce SQL calls by not attempting to import old data (but not on first time)
-      next if datetime < (latest_imported_feeding_date - 1.day) && imported_count > 0
+      next if latest_imported_feeding_date && datetime < (latest_imported_feeding_date - 1.day)
 
       if line[:food].present?
         # {:date=>"15/06/17", :time=>"6:30:21 AM", :food=>"Banana Porridge", :quantity=>"3/4 Bowl"}
