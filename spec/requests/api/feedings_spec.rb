@@ -1,10 +1,10 @@
 require 'rails_helper.rb'
 
 describe 'GET /api/bottles' do
-  let(:import_request) { JSON.parse(File.read('spec/support/import/cloudmailin-feeding-request.json')) }
+  let(:import_params) { JSON.parse(File.read('spec/support/import/cloudmailin-feeding-request.json')) }
 
   before(:each) do
-    post '/api/import', params: import_request
+    post '/api/import', params: import_params
   end
 
   it 'responds with bottle statistics' do

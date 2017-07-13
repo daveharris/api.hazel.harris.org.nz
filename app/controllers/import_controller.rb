@@ -12,7 +12,7 @@ class ImportController < ApplicationController
       if model_object = model.safe_constantize
         Rails.logger.debug "Found #{model} attachment. Importing ..."
 
-        decoded = Base64.decode64(attachment[:content]).encode(universal_newline: true)
+        decoded = Base64.decode64(attachment[:content]).force_encoding('UTF-8').encode(universal_newline: true)
         status = model_object.public_send(:from_csv, StringIO.new(decoded))
 
         Rails.logger.info "Imported #{status.ids.size} #{model.pluralize} via #{status.num_inserts} SQL inserts"
