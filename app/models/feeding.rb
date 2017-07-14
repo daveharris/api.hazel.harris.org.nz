@@ -22,6 +22,7 @@ class Feeding < ApplicationRecord
         feeding = Solid.new
         feeding.quantity = line[:quantity] # quantity -> String
         feeding.description = line[:food]
+        feeding.infer_amount!
       else
         # {:date=>"15/06/17", :time=>"6:22:40 PM", :amount=>90, :formula=>1}
         feeding = Bottle.new
