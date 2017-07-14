@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170626074438) do
+ActiveRecord::Schema.define(version: 20170717094443) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +27,18 @@ ActiveRecord::Schema.define(version: 20170626074438) do
     t.integer "duration"
     t.index ["at", "type"], name: "index_feedings_on_at_and_type", unique: true
     t.index ["type"], name: "index_feedings_on_type"
+  end
+
+  create_table "medications", force: :cascade do |t|
+    t.datetime "at"
+    t.string "medication"
+    t.float "amount"
+    t.string "quantity"
+    t.string "notes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["at", "medication"], name: "index_medications_on_at_and_medication", unique: true
+    t.index ["medication"], name: "index_medications_on_medication"
   end
 
 end

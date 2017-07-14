@@ -1,8 +1,8 @@
 class CreateFeedings < ActiveRecord::Migration[5.1]
   def change
     create_table :feedings do |t|
-      t.string   :type
       t.datetime :at
+      t.string   :type
       t.integer  :amount # Bottle
       t.string   :quantity # Solid
       t.string   :description

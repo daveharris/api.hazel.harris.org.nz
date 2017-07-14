@@ -1,8 +1,8 @@
-class BottlesController < ApplicationController
+class SolidsController < ApplicationController
   include ActionView::Helpers::NumberHelper
 
   def index
-    stats = Bottle.pluck('count(id), avg(amount), min(amount), max(amount), sum(amount)').flatten
+    stats = Solid.pluck('count(id), avg(amount), min(amount), max(amount), sum(amount)').flatten
 
     render json: {
       count:      stats[0],
@@ -14,7 +14,7 @@ class BottlesController < ApplicationController
   end
 
   def week
-    sum_amount = Bottle
+    sum_amount = Solid
       .group_by_week(:at, week_start: :mon)
       .sum(:amount)
       .reverse_merge(empty_weeks_since_birth)

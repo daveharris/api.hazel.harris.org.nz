@@ -48,7 +48,7 @@ class Solid < Feeding
     end
 
     if self.amount == nil
-      puts "WARNING: Didn't find match for [#{full_description}]"
+      Rails.logger.warn "Couldn't infer amount from [#{full_description}]"
     end
   end
 
