@@ -1,5 +1,4 @@
-class MedicationController < ApplicationController
-  include ActionView::Helpers::NumberHelper
+class MedicationsController < ApplicationController
 
   def pamol_week
     sum_amount = Medication

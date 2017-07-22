@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   scope '/api' do
-    resources :import, only: [:index, :create]
+    resources :import, only: [:create]
 
     resources :bottles, only: [:index] do
       get :week, on: :collection
@@ -10,6 +10,6 @@ Rails.application.routes.draw do
       get :week, on: :collection
     end
 
-    get '/medication/pamol/week' => 'medication#pamol_week'
+    get '/medications/pamol/week' => 'medications#pamol_week'
   end
 end
